@@ -66,9 +66,9 @@ public class productContoller {
             }
 
             // generation of a new product number
-            int newAccountNumber=Integer.parseInt(productValidations.randomString(prod.getProductType().getIdType()));
+            long newAccountNumber=Long.parseLong(productValidations.randomString(prod.getProductType().getIdType()));
             while (!productService.getProductByProductNumber(newAccountNumber).isEmpty()){
-                newAccountNumber=Integer.parseInt(productValidations.randomString(prod.getProductType().getIdType()));
+                newAccountNumber=Long.parseLong(productValidations.randomString(prod.getProductType().getIdType()));
             }
             prod.setProductNumber(newAccountNumber);
             // calculation of available balance
@@ -127,7 +127,7 @@ public class productContoller {
         }
     }
 
-    @PutMapping("/exemptAccount/{id}")
+    @PutMapping("/cancelAccount/{id}")
     public ResponseEntity cancelAccount(@PathVariable("id") int id){
         product prod = productService.getProductById(id).get();
         if (prod.getBalance() == 0){
