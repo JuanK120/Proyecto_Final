@@ -13,16 +13,19 @@ public class product {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int productId;
 
-    @ManyToOne(targetEntity = client.class,cascade = CascadeType.ALL)
-    private int owner;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner")
+    private client owner;
 
-    @ManyToOne(targetEntity = productType.class,cascade = CascadeType.ALL)
-    private int productType;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "productType")
+    private productType productType;
 
-    private int productNumber;
+    private long productNumber;
 
-    @ManyToOne(targetEntity = accountState.class,cascade = CascadeType.ALL)
-    private int state;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "state")
+    private accountState state;
 
     private int balance;
 
@@ -32,13 +35,15 @@ public class product {
 
     private Date creationDate;
 
-    @ManyToOne(targetEntity = users.class)
-    private int crationUser;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "crationUser")
+    private users crationUser;
 
     private Date modificationDate;
 
-    @ManyToOne(targetEntity = users.class)
-    private int modificationUser;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "modificationUser")
+    private users modificationUser;
 
     public product() {
     }
@@ -47,35 +52,35 @@ public class product {
         return productId;
     }
 
-    public int getOwner() {
+    public client getOwner() {
         return owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(client owner) {
         this.owner = owner;
     }
 
-    public int getProductType() {
+    public productType getProductType() {
         return productType;
     }
 
-    public void setProductType(int productType) {
+    public void setProductType(productType productType) {
         this.productType = productType;
     }
 
-    public int getProductNumber() {
+    public long getProductNumber() {
         return productNumber;
     }
 
-    public void setProductNumber(int productNumber) {
+    public void setProductNumber(long productNumber) {
         this.productNumber = productNumber;
     }
 
-    public int getState() {
+    public accountState getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(accountState state) {
         this.state = state;
     }
 
@@ -111,11 +116,11 @@ public class product {
         this.creationDate = creationDate;
     }
 
-    public int getCrationUser() {
+    public users getCrationUser() {
         return crationUser;
     }
 
-    public void setCrationUser(int crationUser) {
+    public void setCrationUser(users crationUser) {
         this.crationUser = crationUser;
     }
 
@@ -127,11 +132,11 @@ public class product {
         this.modificationDate = modificationDate;
     }
 
-    public int getModificationUser() {
+    public users getModificationUser() {
         return modificationUser;
     }
 
-    public void setModificationUser(int modificationUser) {
+    public void setModificationUser(users modificationUser) {
         this.modificationUser = modificationUser;
     }
 }

@@ -13,14 +13,17 @@ public class transaction {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int transactionId;
 
-    @ManyToOne(targetEntity = transactionType.class,cascade = CascadeType.ALL)
-    private int transactionType;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "transactionType")
+    private transactionType transactionType;
 
-    @ManyToOne(targetEntity = movementType.class,cascade = CascadeType.ALL)
-    private int movementType;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "movementType")
+    private movementType movementType;
 
-    @ManyToOne(targetEntity = product.class,cascade = CascadeType.ALL)
-    private int targetProduct;
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "targetProduct")
+    private product targetProduct;
 
     private Date movementDate;
 
@@ -39,27 +42,27 @@ public class transaction {
         return transactionId;
     }
 
-    public int getTransactionType() {
+    public transactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(int transactionType) {
+    public void setTransactionType(transactionType transactionType) {
         this.transactionType = transactionType;
     }
 
-    public int getMovementType() {
+    public movementType getMovementType() {
         return movementType;
     }
 
-    public void setMovementType(int movementType) {
+    public void setMovementType(movementType movementType) {
         this.movementType = movementType;
     }
 
-    public int getTargetProduct() {
+    public product getTargetProduct() {
         return targetProduct;
     }
 
-    public void setTargetProduct(int targetProduct) {
+    public void setTargetProduct(product targetProduct) {
         this.targetProduct = targetProduct;
     }
 

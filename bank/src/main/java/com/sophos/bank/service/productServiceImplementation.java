@@ -1,7 +1,9 @@
 package com.sophos.bank.service;
 
+import com.sophos.bank.entity.client;
 import com.sophos.bank.entity.product;
 import com.sophos.bank.repository.productRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +37,33 @@ public class productServiceImplementation implements productService{
             productRepository.deleteById(id);
             return true;
         }).orElse(false);
+    }
+
+    @Override
+    @Transactional
+    public product updateProduct(product product) {
+         productRepository.setProductInfoById(
+                product.getProductId(),product.getOwner(),
+                 product.getProductType(),product.getProductNumber(),
+                 product.getState(),product.getBalance(),
+                 product.getAvailableBalance(),product.isGmfExempt(),
+                 product.getModificationDate(),product.getModificationUser()
+        );
+        return product;
+    }
+
+    @Override
+    public List<product> getProductByProductNumber(long productNumber) {
+        return productRepository.findAllByProductNumber(productNumber);
+    }
+
+    @Override
+    public List<product> getProductByOwnerAndGmfexempt(client client, boolean exempt) {
+        return productRepository.findByOwnerAndGmfExempt(client,exempt);
+    }
+
+    @Override
+    public List<product> findAllByOwner(Optional<client> clientById) {
+        return productRepository.findAllByOwner(clientById);
     }
 }

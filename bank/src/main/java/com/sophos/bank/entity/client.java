@@ -5,6 +5,7 @@ package com.sophos.bank.entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @Table(name="client")
@@ -29,6 +30,10 @@ public class client {
     private Date birthDate;
 
     private Date creationDate;
+
+    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "creationUser")
+    private users cUsers;
 
     private Date modificationDate;
 
@@ -109,7 +114,15 @@ public class client {
         this.modificationDate = modificationDate;
     }
 
-    public users getModificationUser() {
+    public users getCreationUser() {
+        return users;
+    }
+
+    public void setCreationUser(users modificationUser) {
+        this.users = modificationUser;
+    }
+
+    public com.sophos.bank.entity.users getModificationUser() {
         return users;
     }
 

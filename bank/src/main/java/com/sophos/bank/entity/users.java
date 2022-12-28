@@ -27,6 +27,10 @@ public class users{
         return userId;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public String getUserName() {
         return userName;
     }

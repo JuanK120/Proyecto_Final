@@ -2,11 +2,8 @@ package com.sophos.bank.validations;
 
 
 
-import com.sophos.bank.entity.client;
+
 import com.sophos.bank.entity.product;
-import com.sophos.bank.repository.clientRepository;
-import com.sophos.bank.repository.productRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -14,11 +11,6 @@ import java.util.regex.Pattern;
 import static com.sophos.bank.validations.auxiliars.*;
 
 public class clientValidations {
-
-    @Autowired
-    clientRepository clientRepository;
-    @Autowired
-    productRepository productRepository;
 
     public clientValidations(){
 
@@ -29,9 +21,8 @@ public class clientValidations {
         return age >= 18;
     }
 
-    public boolean isDeletable(int id){
-        List<product> products = productRepository.findAllByOwner(id);
-        return !products.stream().anyMatch(prod -> prod.getState()!=3);
+    public boolean isDeletable(List<product> products){
+        return products.stream().noneMatch(prod -> prod.getState().getIdState()!=3);
     }
 
     public boolean isEmail(String email){

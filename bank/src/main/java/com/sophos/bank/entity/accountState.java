@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 @Table(name="accountState")
 public class accountState {
 
+
+
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int idState;
@@ -19,6 +21,10 @@ public class accountState {
 
     public int getIdState() {
         return idState;
+    }
+
+    public void setIdState(int idState) {
+        this.idState = idState;
     }
 
     public String getStateName() {
