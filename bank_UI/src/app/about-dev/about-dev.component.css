@@ -1,0 +1,26 @@
+.navbar{
+    background-color: rgba(58, 56, 56, 1);
+}
+
+a, a:hover a:active{
+    text-decoration: none;
+    color: inherit;
+}
+
+a.navbar-brand{
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2em;
+    color: rgba(47, 171, 26, 1);
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.navbar-nav{
+    margin-right: 3%;
+}
+
+.navbar-nav a{
+    color: black;
+    
+}
+

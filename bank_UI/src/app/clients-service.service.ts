@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { client } from './models/client';
+import { client } from './shared/models/client';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,11 +22,11 @@ export class ClientsServiceService {
   }
 
   public postData(body:JSON): Observable<client>{
-    return this.http.post(`${this.url}`,body)
+    return this.http.post<client>(`${this.url}`,body)
   }
 
   public updateData(body:JSON): Observable<client>{
-    return this.http.put(`${this.url}`,body)
+    return this.http.put<client>(`${this.url}`,body)
   }
 
   public deleteData(id:string): Observable<client>{

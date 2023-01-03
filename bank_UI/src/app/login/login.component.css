@@ -1,0 +1,32 @@
+
+.container {
+    margin-top: 10%;
+    width: 40%;
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .flex-column {
+    flex-direction: column;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .justify-content-center {
+    justify-content: center;
+  }
+  
+  .align-self-center {
+    align-self: center;
+  }
+
+  .form-group{
+    margin-top: 4%;
+  }
