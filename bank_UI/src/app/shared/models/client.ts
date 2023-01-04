@@ -4,7 +4,7 @@ import { users } from "./users";
 
 export interface client {
     clientId:number;
-    identificationType:identificationType;
+    idType:identificationType;
     idNumber:number;
     name:string;
     lastName:string;

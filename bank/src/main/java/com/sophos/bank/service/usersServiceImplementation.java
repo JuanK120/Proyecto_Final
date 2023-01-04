@@ -30,6 +30,11 @@ public class usersServiceImplementation implements usersService {
     }
 
     @Override
+    public Optional<users> getUserByEmailAndPassword(String email, String password) {
+        return usersRepository.findByEmailAndPassword(email,password);
+    }
+
+    @Override
     public boolean deleteUserById(int id) {
         return getUserById(id).map(users -> {
             usersRepository.deleteById(id);

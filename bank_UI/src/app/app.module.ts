@@ -8,24 +8,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ClientsComponent } from './clients/clients.component';
-import { TransactionsComponent } from './transactions/transactions.component';
 import { AboutDevComponent } from './about-dev/about-dev.component';
+import { UsersComponent } from './users/users.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import { ProductComponent } from './product/product.component';
+import { CommonModule } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ClientsComponent,
-    TransactionsComponent,
-    AboutDevComponent
+    AboutDevComponent,
+    UsersComponent,
+    TransactionComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

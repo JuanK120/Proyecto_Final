@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class ClientsServiceService {
 
-  public url:string = environment.UrlApi+'/client';
+  public url:string = environment.apiUrl+'/client';
 
   constructor(public http:HttpClient) { };
 
-  public getAllData(): Observable<client>{
-    return this.http.get<client>(`${this.url}`)
+  public getAllData(): Observable<Array<client>>{
+    return this.http.get<Array<client>>(`${this.url}`)
   }
 
   public getIdData(id:string): Observable<client>{

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class userContoller {
@@ -43,6 +44,20 @@ public class userContoller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+
+
+    @PutMapping("/login")
+    public ResponseEntity<users> login(@RequestBody users user){
+        //System.out.println(user.getEmail() + " " + user.getPassword());
+        return usersService.getUserByEmailAndPassword(user.getEmail(),user.getPassword()).map(
+                userResult -> {
+                    System.out.println("here: " + userResult.getUserName() + " " + userResult.getUserId());
+                    return new ResponseEntity<users>(userResult, HttpStatus.OK);}
+        ).orElse(
+                new ResponseEntity<>(HttpStatus.NOT_FOUND)
+        );
     }
 
 }

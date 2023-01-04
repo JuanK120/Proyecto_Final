@@ -9,5 +9,7 @@ public interface usersService {
     public users createUser(users user);
     public List<users> getAllUsers();
     public Optional<users> getUserById(int id);
+    public Optional<users> getUserByEmailAndPassword(String email,String password);
     public boolean deleteUserById(int id);
+
 }

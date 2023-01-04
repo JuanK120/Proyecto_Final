@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductsServiceService {
 
-  public url:string = environment.UrlApi+'/product';
+  public url:string = environment.apiUrl+'/product';
 
   constructor(public http:HttpClient) { };
 
@@ -22,11 +22,11 @@ export class ProductsServiceService {
   }
 
   public postData(body:JSON): Observable<product>{
-    return this.http.post(`${this.url}`,body)
+    return this.http.post<product>(`${this.url}`,body)
   }
 
   public updateData(body:JSON): Observable<product>{
-    return this.http.put(`${this.url}`,body)
+    return this.http.put<product>(`${this.url}`,body)
   }
 
   public deleteData(id:string): Observable<product>{

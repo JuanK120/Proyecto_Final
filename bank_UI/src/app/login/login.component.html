@@ -1,6 +1,7 @@
 <div class="d-flex flex-column">
     <div class="container align-self-center">
       <h2 class="text-center">Login</h2>
+      <p class="text-center text-danger" *ngIf="loginError">** Invalid Login **</p>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             
         <div class="form-group row input-group input-group-lg">
@@ -12,7 +13,7 @@
         <div class="form-group row input-group input-group-lg">
           <label class="col-sm-3 col-form-label"> Password: </label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" formControlName="password">
+            <input type="password" class="form-control" formControlName="password">
   
           </div>
         </div>
