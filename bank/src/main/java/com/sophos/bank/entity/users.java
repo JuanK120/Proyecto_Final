@@ -62,4 +62,12 @@ public class users{
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    public void setUser(users user){
+        this.userId=user.userId;
+        this.userName=user.userName;
+        this.email=user.email;
+        this.password=user.password;
+        this.active=user.active;
+    }
 }

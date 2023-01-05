@@ -36,8 +36,8 @@ public class product {
     private Date creationDate;
 
     @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "crationUser")
-    private users crationUser;
+    @JoinColumn(name = "creationUser")
+    private users creationUser;
 
     private Date modificationDate;
 
@@ -116,12 +116,12 @@ public class product {
         this.creationDate = creationDate;
     }
 
-    public users getCrationUser() {
-        return crationUser;
+    public users getCreationUser() {
+        return creationUser;
     }
 
-    public void setCrationUser(users crationUser) {
-        this.crationUser = crationUser;
+    public void setCreationUser(users creationUser) {
+        this.creationUser = creationUser;
     }
 
     public Date getModificationDate() {
@@ -139,4 +139,5 @@ public class product {
     public void setModificationUser(users modificationUser) {
         this.modificationUser = modificationUser;
     }
+
 }

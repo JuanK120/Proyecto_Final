@@ -43,6 +43,11 @@ public class transactionContoller {
         );
     }
 
+    @GetMapping("/transactions/{accountNumber}")
+    public ResponseEntity<List<transaction>> getTransaction(@PathVariable("accountNumber") long accountNumber){
+        return new ResponseEntity<>(transactionService.getAllTransactionsByAccount(accountNumber), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<transaction> createTransaction(@RequestBody transaction transaction){
         transaction transac = transaction;

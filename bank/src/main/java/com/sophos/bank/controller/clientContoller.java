@@ -85,12 +85,7 @@ public class clientContoller{
         ){
             client client1 = client;
             client1.setModificationDate(new Date(System.currentTimeMillis()));
-            users admin = new users();
-            admin.setUserId(1);
-            admin.setUserName("admin");
-            admin.setEmail("admin@admin.com");
-            admin.setPassword("123456");
-            admin.setActive(true);
+            users admin = usersService.getUserById(1).get();
             if (client1.getCreationUser() == null) {
                 client1.setCreationUser(admin);
             }

@@ -4,7 +4,9 @@ package com.sophos.bank.controller;
 import com.sophos.bank.entity.accountState;
 import com.sophos.bank.entity.product;
 import com.sophos.bank.entity.users;
+import com.sophos.bank.service.clientService;
 import com.sophos.bank.service.productService;
+import com.sophos.bank.service.usersService;
 import com.sophos.bank.validations.productValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,12 @@ public class productContoller {
     @Autowired
     productService productService;
 
+    @Autowired
+    clientService clientService;
+
+    @Autowired
+    usersService usersService;
+
     productValidations productValidations = new productValidations();
 
     @GetMapping
@@ -37,6 +45,11 @@ public class productContoller {
         ).orElse(
                 new ResponseEntity<>(HttpStatus.NOT_FOUND)
         );
+    }
+
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<List<product>> getProductsByOwner(@PathVariable("id") int id){
+        return new ResponseEntity<>(productService.findAllByOwner(clientService.getClientById(id)), HttpStatus.OK);
     }
 
     @PostMapping
@@ -86,22 +99,14 @@ public class productContoller {
         prod.setState(state);
         prod.setCreationDate(new Date(System.currentTimeMillis()));
         prod.setModificationDate(new Date(System.currentTimeMillis()));
-
         // creation and uptate user is admin by default
-        users admin = new users();
-        admin.setUserId(1);
-        admin.setUserName("admin");
-        admin.setEmail("admin@admin.com");
-        admin.setPassword("123456");
-        admin.setActive(true);
-        if (prod.getCrationUser() == null) {
-            prod.setCrationUser(admin);
+        users admin = usersService.getUserById(1).get();
+        if (prod.getCreationUser() == null) {
+            prod.setCreationUser(admin);
         }
-        if (prod.getCrationUser() == null) {
-            prod.setCrationUser(admin);
+        if (prod.getModificationUser() == null) {
+            prod.setModificationUser(admin);
         }
-
-
         return new ResponseEntity<>(productService.createProduct(prod),HttpStatus.CREATED);
     }
 
@@ -116,11 +121,25 @@ public class productContoller {
     }
 
     @PutMapping("/exemptAccount/{id}")
-    public ResponseEntity exemptAccount(@PathVariable("id") int id){
+    public ResponseEntity exemptAccount(@PathVariable("id") int id, @RequestBody users user){
         product prod = productService.getProductById(id).get();
-        if (productValidations.noExemptAccounts(productService.getProductByOwnerAndGmfexempt(prod.getOwner(),true))){
+        if (
+                (
+                        prod.isGmfExempt() == false
+                ) && (
+                        productValidations.noExemptAccounts(
+                                productService.getProductByOwnerAndGmfexempt(prod.getOwner(),true))
+                )
+        ){
             prod.setGmfExempt(true);
             prod.setModificationDate(new Date(System.currentTimeMillis()));
+            prod.setModificationUser(user);
+            productService.updateProduct(prod);
+            return new  ResponseEntity<>(HttpStatus.OK);
+        } else if (prod.isGmfExempt() == true){
+            prod.setGmfExempt(false);
+            prod.setModificationDate(new Date(System.currentTimeMillis()));
+            prod.setModificationUser(user);
             productService.updateProduct(prod);
             return new  ResponseEntity<>(HttpStatus.OK);
         } else{
@@ -129,7 +148,7 @@ public class productContoller {
     }
 
     @PutMapping("/cancelAccount/{id}")
-    public ResponseEntity cancelAccount(@PathVariable("id") int id){
+    public ResponseEntity cancelAccount(@PathVariable("id") int id,@RequestBody users user){
         product prod = productService.getProductById(id).get();
         if (prod.getBalance() == 0){
             accountState state=new accountState();
@@ -137,6 +156,7 @@ public class productContoller {
             state.setStateName("Canceled");
             prod.setState(state);
             prod.setModificationDate(new Date(System.currentTimeMillis()));
+            prod.setModificationUser(user);
             productService.updateProduct(prod);
             return new  ResponseEntity<>(HttpStatus.OK);
         } else{

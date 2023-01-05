@@ -33,4 +33,15 @@ export class ProductsServiceService {
     return this.http.delete<product>(`${this.url}/${id}`)
   }
 
+  public getDataByOwner(id:string): Observable<Array<product>>{
+    return this.http.get<Array<product>>(`${this.url}/owner/${id}`)
+  }
+
+  public exemptAccount(id:string, body:JSON): Observable<product>{
+    return this.http.put<product>(`${this.url}/exempt/${id}`,body)
+  }
+
+  public CancelAccount(id:string,body:JSON): Observable<product>{
+    return this.http.put<product>(`${this.url}/cancelAccount/${id}`,body)
+  }
 }

@@ -18,6 +18,9 @@ public class productServiceImplementation implements productService{
 
     @Override
     public product createProduct(product product) {
+        if (product.getCreationUser().equals(product.getModificationUser())){
+            product.setModificationUser(product.getCreationUser());
+        }
         return productRepository.save(product);
     }
 

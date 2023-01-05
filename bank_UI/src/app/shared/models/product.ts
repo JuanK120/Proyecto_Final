@@ -13,7 +13,7 @@ export interface product {
     balance:number;
     availableBalance:number;
     gmfExempt:boolean;
-    creationDate:Date
+    creationDate:Date;
     creationUser:users;
     modificationDate:Date;
     modificationUser:users;

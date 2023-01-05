@@ -27,7 +27,14 @@
         </form>    
     </div>
     <div class="container">
-        <button class="btn btn-success float-end" type="submit" (click)="showAddClientForm()">new client</button>
+        <button class="btn btn-success float-end" (click)="showAddClientForm()">new client</button>
+
+        <!--
+
+            PopUp Forms
+
+        -->
+
         <div class="popup" id="addClientForm">
             <div class="close-btn" (click)="hideAddClientMenu()">&times;</div>
             <form class="form" [formGroup]="addClientForm" (ngSubmit)="addClient()">
@@ -109,7 +116,14 @@
                         <button class="float-end" class="btn btn-success" type="submit">save</button>
                     </div>
                 </form>
-        </div>      
+        </div>    
+        
+        <!--
+
+            PopUp Forms
+
+        -->
+
         <table class="table">
             <thead>
                 <tr>

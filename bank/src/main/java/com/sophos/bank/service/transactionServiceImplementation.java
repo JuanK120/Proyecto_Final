@@ -25,6 +25,11 @@ public class transactionServiceImplementation implements transactionService{
     }
 
     @Override
+    public List<transaction> getAllTransactionsByAccount(long targetProduct) {
+        return transactionRepository.findAllByTargetProduct(targetProduct);
+    }
+
+    @Override
     public Optional<transaction> getTransactionById(int id) {
         return transactionRepository.findById(id);
     }

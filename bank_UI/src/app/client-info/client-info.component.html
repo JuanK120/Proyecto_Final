@@ -6,16 +6,39 @@
                 <a [routerLink]="['/users']" class="" (click)="flushCurrentClient()">User</a>
             </li>
             <li class="nav-item">
-                <a class=" Active">Clients</a>
+                <a [routerLink]="['/clients']" class="Active" (click)="flushCurrentClient()">Clients</a>
             </li>
             <li class="nav-item">
-                <a [routerLink]="['/login']" class="" (click)="flushCurrentClient()">Transactions</a>
+                <a [routerLink]="['/transactions']" class="" (click)="flushCurrentClient()">Transactions</a>
             </li>
         </ul>
     </div>
 </nav>
 <div class="container">
     <div class="container">
+        <div class="container">
+            <h3 class=""> Client Info</h3>
+            <div class="row">
+                <h6 class="col-1">Id Type</h6>
+                <p class="col-3">{{curentClient?.idType?.type}}</p>
+                <h6 class="col-1">Id Number</h6>
+                <p class="col-3">{{curentClient?.idNumber}}</p>
+            <div class="row">
+                <h6 class="col-1">Name</h6>
+                <p class="col-3">{{curentClient?.name}}</p>
+                <h6 class="col-1">Last Name</h6>
+                <p class="col-3">{{curentClient?.lastName}}</p>
+            </div>                
+            </div>
+            <div class="row">
+                <h6 class="col-1">Email</h6>
+                <p class="col-3">{{curentClient?.email}}</p>
+                <h6 class="col-1">Birth Date</h6>
+                <p class="col-2">{{curentClient?.birthDate|date:"dd/MM/yyyy"}}</p>
+                <h6 class="col-1">Active</h6>
+                <p class="col-2">{{curentClient?.active}}</p>
+            </div>
+        </div>
         <form class="row" [formGroup]="searchAccountForm" (ngSubmit)="searchAccount()">
             <div class="form-group col-lg-6 col-8">
                 <label class="col-4"> Search by account Id </label>
@@ -27,7 +50,110 @@
         </form>    
     </div>
     <div class="container">
-        <button class="btn btn-success float-end" type="submit">new Accoutn</button>    
+        <button class="btn btn-success float-end" (click)="showAddAccountForm()">New Account</button>
+        <!--
+
+            PopUp Forms
+
+        -->
+        <div class="popup" id="addAccountForm">
+            <div class="close-btn" (click)="HideAddAccountForm()">&times;</div>
+            <form class="form" [formGroup]="addAccountForm" (ngSubmit)="addAccount()">
+                <h2>Add Client</h2>
+                <div class="form-element">
+                    <label for="accountType">Account Type</label>
+                    <select class="float-end" type="select" id="accountType" placeholder="Select Account type" formControlName="accountType">
+                        <option *ngFor="let type of accountTypes" [ngValue]="type">{{ type.accountType }}</option>
+                    </select>
+                </div>
+                <div class="form-element">
+                    <label for="state">Account State</label>
+                    <select class="float-end" type="select" id="state" placeholder="Select state" formControlName="state">
+                        <option *ngFor="let state of states" [ngValue]="state">{{ state.stateName }}</option>
+                    </select>
+                </div>
+                <div class="form-element">
+                    <label for="name">Balance</label>
+                    <input class="float-end" type="number" id="balance" placeholder="Balance" formControlName="balance">                  
+                </div>
+                <div class="form-element">
+                    <label for="accountType">GMF Exempt</label>
+                    <select class="float-end" type="select" id="gmfExempt" placeholder="GMF Exempt" formControlName="gmfExempt">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div class="form-element">
+                    <button class="float-end" class="btn btn-success" type="submit">Add</button>
+                </div>
+            </form>
+        </div>  
+        
+        <!--
+
+            PopUp Forms
+
+        -->
+
+        <!--
+
+            PopUp Account Info
+
+        -->
+        <div class="popup" id="accountInfo">
+            <div class="close-btn" (click)="HideAccountInfo()">&times;</div>
+            <div class="container">
+                <div class="container">
+                    <h3 class=""> Account Info</h3>
+                    <div class="row">
+                        <h6 class="col-1">Account number</h6>
+                        <p class="col-3">{{currentAccount?.productNumber}}</p>
+                        <h6 class="col-1">Account Type</h6>
+                        <p class="col-3">{{currentAccount?.productType?.accountType}}</p>
+                    <div class="row">
+                        <h6 class="col-1">Balance</h6>
+                        <p class="col-3">{{currentAccount?.balance}}</p>
+                        <h6 class="col-1">Available Balance</h6>
+                        <p class="col-3">{{currentAccount?.availableBalance}}</p>
+                    </div>                
+                    </div>
+                    <div class="row">
+                        <h6 class="col-1">State</h6>
+                        <p class="col-3">{{currentAccount?.state?.stateName}}</p>
+                        <h6 class="col-1">GMF Exempt</h6>
+                        <p class="col-2">{{currentAccount?.gmfExempt}}</p>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-1">tran. Id</th>
+                            <th scope="col" class="col-1">Transaction Type</th>
+                            <th scope="col" class="col-2">Movement Type</th>
+                            <th scope="col" class="col-1"> Amount</th>
+                            <th scope="col" class="col-4"> Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let transaction of transactions">
+                            <td>{{transaction.transactionId}}</td>
+                            <td>{{transaction?.transactionType?.transactionType}}</td>
+                            <td>{{transaction?.movementType?.transactionType}}</td>
+                            <td>{{transaction.movementDate|date:"dd/MM/yyyy"}}</td>
+                            <td>{{transaction.amount}}</td>
+                            <td>{{transaction.description}}</td>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>  
+        
+        <!--
+
+            PopUp Account info
+
+        -->
+
         <table class="table">
             <thead>
                 <tr>
@@ -38,9 +164,9 @@
                     <th scope="col">Balance</th>
                     <th scope="col">Av. Balance</th>
                     <th scope="col">gmfExempt</th>
-                    <th scope="col">Expand</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col">Transacions</th>
+                    <th scope="col">Exempt</th>
+                    <th scope="col">Cancel</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,9 +178,9 @@
                     <td>{{account.balance}}</td>
                     <td>{{account.availableBalance}}</td>
                     <td>{{account.gmfExempt}}</td>
-                    <td><button class="btn btn-light" [routerLink]="['clientInfo']">Expand</button></td>
-                    <td><button class="btn btn-light">Edit</button></td>
-                    <td><button class="btn btn-light">Delete</button></td> 
+                    <td><button class="btn btn-light" (click)="showAccountInfo(account)">Transacions</button></td>
+                    <td><button class="btn btn-light" (click)="exemptAccount(account)">Exempt</button></td>
+                    <td><button class="btn btn-light" (click)="cancelAccount(account)">Cancel</button></td> 
             </tbody>
         </table>
         

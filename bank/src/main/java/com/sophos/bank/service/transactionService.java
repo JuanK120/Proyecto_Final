@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface transactionService {
     public transaction createTransaction(transaction transaction);
     public List<transaction> getAllTransactions();
+    public List<transaction> getAllTransactionsByAccount(long targetProduct);
     public Optional<transaction> getTransactionById(int id);
     public boolean deleteTransactionById(int id);
 }

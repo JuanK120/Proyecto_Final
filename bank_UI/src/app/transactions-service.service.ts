@@ -13,8 +13,8 @@ export class TransactionsServiceService {
 
   constructor(public http:HttpClient) { };
 
-  public getAllData(): Observable<transaction>{
-    return this.http.get<transaction>(`${this.url}`)
+  public getAllData(): Observable<Array<transaction>>{
+    return this.http.get<Array<transaction>>(`${this.url}`)
   }
 
   public getIdData(id:string): Observable<transaction>{
@@ -31,5 +31,9 @@ export class TransactionsServiceService {
 
   public deleteData(id:string): Observable<transaction>{
     return this.http.delete<transaction>(`${this.url}/${id}`)
+  }
+
+  public getAllDataByAccount(accountNum:string): Observable<Array<transaction>>{
+    return this.http.get<Array<transaction>>(`${this.url}/transactions/${accountNum}`)
   }
 }
