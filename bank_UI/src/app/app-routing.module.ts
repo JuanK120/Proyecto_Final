@@ -12,7 +12,7 @@ const routes: Routes = [
   {path : 'login', component:LoginComponent},
   {path : 'aboutDev', component:AboutDevComponent},
   {path : 'users', component:UsersComponent},
-  {path : 'clients', component:ClientsComponent},
+  {path : 'clients', loadChildren:() => import('./clients/clients.module').then(m => m.ClientsModule)},
   {path : 'transactions', component:TransactionComponent}
 ];
 

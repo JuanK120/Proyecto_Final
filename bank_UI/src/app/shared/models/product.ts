@@ -7,7 +7,7 @@ import { users } from "./users";
 export interface product {
     productId:number;
     owner:client;
-    producType:productType;
+    productType:productType;
     productNumber:number;
     state:accountState;
     balance:number;

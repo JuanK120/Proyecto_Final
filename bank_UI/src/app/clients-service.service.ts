@@ -11,6 +11,8 @@ export class ClientsServiceService {
 
   public url:string = environment.apiUrl+'/client';
 
+  private currentClient:client|null=null;
+
   constructor(public http:HttpClient) { };
 
   public getAllData(): Observable<Array<client>>{
@@ -33,4 +35,15 @@ export class ClientsServiceService {
     return this.http.delete<client>(`${this.url}/${id}`)
   }
 
+  public setCurrentClient(client:client):void{
+    this.currentClient=client;
+  };
+
+  public getCurrentClient():client|null{
+    return this.currentClient;
+  }
+
+  public flushCurrentClient():void{
+    this.currentClient=null;
+  }
 }

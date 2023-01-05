@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" (click)="flushAll()"> <i class="fa-solid fa-piggy-bank"></i> Bank Sophos</a>
+        <ul class="navbar-nav float-end">
+            <li class="nav-item">
+                <a [routerLink]="['/users']" class="" (click)="flushCurrentClient()">User</a>
+            </li>
+            <li class="nav-item">
+                <a class=" Active">Clients</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['/login']" class="" (click)="flushCurrentClient()">Transactions</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="container">
+        <form class="row" [formGroup]="searchAccountForm" (ngSubmit)="searchAccount()">
+            <div class="form-group col-lg-6 col-8">
+                <label class="col-4"> Search by account Id </label>
+                <input class="col-6" type="text" placeholder="Id to Search" formControlName="IdSearch">
+            </div>
+            <div class="form-group col-lg-5 col-2">
+                <button class="btn btn-dark" type="submit">search</button>
+            </div>    
+        </form>    
+    </div>
+    <div class="container">
+        <button class="btn btn-success float-end" type="submit">new Accoutn</button>    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Prod. Id</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Balance</th>
+                    <th scope="col">Av. Balance</th>
+                    <th scope="col">gmfExempt</th>
+                    <th scope="col">Expand</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let account of accounts">
+                    <td>{{account.productId}}</td>
+                    <td>{{account.productType.accountType}}</td>
+                    <td>{{account.productNumber}}</td>
+                    <td>{{account.state.stateName}}</td>
+                    <td>{{account.balance}}</td>
+                    <td>{{account.availableBalance}}</td>
+                    <td>{{account.gmfExempt}}</td>
+                    <td><button class="btn btn-light" [routerLink]="['clientInfo']">Expand</button></td>
+                    <td><button class="btn btn-light">Edit</button></td>
+                    <td><button class="btn btn-light">Delete</button></td> 
+            </tbody>
+        </table>
+        
+    </div>
+</div>

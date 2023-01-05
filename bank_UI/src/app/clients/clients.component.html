@@ -16,20 +16,104 @@
 </nav>
 <div class="container">
     <div class="container">
-        <form class="row">
+        <form class="row" [formGroup]="searchClientForm" (ngSubmit)="searchClient()">
             <div class="form-group col-lg-6 col-8">
                 <label class="col-4"> Search by Client Id </label>
-                <input class="col-6" type="text" placeholder="ID">
+                <input class="col-6" type="text" placeholder="Id to Search" formControlName="IdSearch">
             </div>
             <div class="form-group col-lg-5 col-2">
-                <button type="submit">search</button>
-            </div>
-        </form>
+                <button class="btn btn-dark" type="submit">search</button>
+            </div>    
+        </form>    
     </div>
     <div class="container">
+        <button class="btn btn-success float-end" type="submit" (click)="showAddClientForm()">new client</button>
+        <div class="popup" id="addClientForm">
+            <div class="close-btn" (click)="hideAddClientMenu()">&times;</div>
+            <form class="form" [formGroup]="addClientForm" (ngSubmit)="addClient()">
+                <h2>Add Client</h2>
+                <div class="form-element">
+                    <label for="idType">Id Type</label>
+                    <select class="float-end" type="select" id="idType" placeholder="Select Id type" formControlName="idType">
+                        <option *ngFor="let type of idTypes" [ngValue]="type">{{ type.type }}</option>
+                    </select>
+                </div>
+                <div class="form-element">
+                    <label for="idNumber">Id Number</label>
+                    <input  class="float-end" type="number" id="idNumber" placeholder="Id Number" formControlName="idNumber">
+                </div>
+                <div class="form-element">
+                    <label for="name">Name</label>
+                    <input class="float-end" type="text" id="name" placeholder="Name" formControlName="name">                  
+                </div>
+                <div class="form-element">
+                    <label for="lastName">Last Name</label>
+                    <input class="float-end" type="text" id="lastName" placeholder="Last Name" formControlName="lastName">                  
+                </div>
+                <div class="form-element">
+                    <label for="email">Email</label>
+                    <input class="float-end" type="text" id="email" placeholder="Email" formControlName="email">                  
+                </div>
+                <div class="form-element">
+                    <label for="birthDate">Birth Date</label>
+                    <input class="float-end" type="date" id="birthDate" formControlName="birthDate">                  
+                </div>
+                <div class="form-element">
+                    <button class="float-end" class="btn btn-success" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="popup" id="editClientForm">
+                <div class="close-btn" (click)="hideEditClientMenu()">&times;</div>
+                <form class="form" [formGroup]="EditClientForm" (ngSubmit)="editClient()">
+                    <h2>Edit Client</h2>
+                    <div class="form-element">
+                        <label for="clientId">Client Id</label>
+                        <input  class="float-end" type="number" id="clientId" placeholder="Client Id" formControlName="clientId" readonly>
+                    </div>
+                    <div class="form-element">
+                        <label for="idType">Id Type</label>
+                        <select class="float-end" type="select" id="idType" placeholder="idType" formControlName="idType">
+                            <option *ngFor="let type of idTypes" [ngValue]="type">{{ type.type }}</option>
+                        </select>
+                    </div>
+                    <div class="form-element">
+                        <label for="idNumber">Id Number</label>
+                        <input  class="float-end" type="number" id="idNumber" placeholder="Id Number" formControlName="idNumber">
+                    </div>
+                    <div class="form-element">
+                        <label for="name">Name</label>
+                        <input class="float-end" type="text" id="name" placeholder="Name" formControlName="name">                  
+                    </div>
+                    <div class="form-element">
+                        <label for="lastName">Last Name</label>
+                        <input class="float-end" type="text" id="lastName" placeholder="Last Name" formControlName="lastName">                  
+                    </div>
+                    <div class="form-element">
+                        <label for="email">Email</label>
+                        <input class="float-end" type="text" id="email" placeholder="Email" formControlName="email">                  
+                    </div>
+                    <div class="form-element">
+                        <label for="birthDate">Birth Date</label>
+                        <input class="float-end" type="date" id="birthDate" formControlName="birthDate">                  
+                    </div>
+                    <div class="form-element">
+                        <label for="active">active</label>
+                        <select class="float-end" type="select" id="active" placeholder="active" formControlName="active">
+                            <option> select if Active </option>
+                            <option value=true>active</option>
+                            <option value=false>inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-element">
+                        <button class="float-end" class="btn btn-success" type="submit">save</button>
+                    </div>
+                </form>
+        </div>      
         <table class="table">
             <thead>
                 <tr>
+                    <th scope="col">Cli. Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Lastname</th>
                     <th scope="col">Id Type</th>
@@ -45,6 +129,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let client of clients">
+                    <td>{{client.clientId}}</td>
                     <td>{{client.name}}</td>
                     <td>{{client.lastName}}</td>
                     <td>{{client.idType.type}}</td>
@@ -53,10 +138,11 @@
                     <td>{{client.birthDate|date:"dd/MM/yyyy"}}</td>
                     <td>{{client.creationDate|date:"dd/MM/yyyy"}}</td>
                     <td>{{client.active}}</td>
-                    <td><a>expand</a></td>
-                    <td><a>Edit</a></td>
-                    <td><a>Delete</a></td> 
+                    <td><button class="btn btn-light" [routerLink]="['clientInfo']" (click)="expandClient(client)">Expand</button></td>
+                    <td><button class="btn btn-light" (click)="showEditClientForm(client)">Edit</button></td>
+                    <td><button class="btn btn-light" (click)="deleteClient(client)">Delete</button></td> 
             </tbody>
         </table>
+        
     </div>
 </div>

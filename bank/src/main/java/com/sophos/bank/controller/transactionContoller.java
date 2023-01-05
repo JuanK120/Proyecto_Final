@@ -49,12 +49,17 @@ public class transactionContoller {
         product prod = transaction.getTargetProduct();
         if (transac.getTransactionType().getIdType()==1){
             int newBalance = prod.getBalance()+transac.getAmount();
-            prod.setBalance(newBalance);
-            transac.setBalance(prod.getBalance());
-            transac.setAvailableBalance(productValidations.gmfValue(prod.getBalance(), prod.isGmfExempt()));
-            transac.setMovementDate(new Date(System.currentTimeMillis()));
-            productService.updateProduct(prod);
-            return new ResponseEntity<>(transactionService.createTransaction(transaction),HttpStatus.CREATED);
+            if ((prod.getProductType().getIdType()==1 && newBalance < 0) ||
+                    (prod.getProductType().getIdType()==1 && newBalance < -3000000)){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                prod.setBalance(newBalance);
+                transac.setBalance(prod.getBalance());
+                transac.setAvailableBalance(productValidations.gmfValue(prod.getBalance(), prod.isGmfExempt()));
+                transac.setMovementDate(new Date(System.currentTimeMillis()));
+                productService.updateProduct(prod);
+                return new ResponseEntity<>(transactionService.createTransaction(transaction), HttpStatus.CREATED);
+            }
         } else if (transac.getTransactionType().getIdType()==2){
             if (transactionValidations.transactionIsViable(prod.getBalance(),transac.getAmount())) {
                 int newBalance = prod.getBalance() - transac.getAmount();
@@ -79,8 +84,8 @@ public class transactionContoller {
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")

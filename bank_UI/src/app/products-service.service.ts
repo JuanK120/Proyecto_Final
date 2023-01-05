@@ -13,8 +13,8 @@ export class ProductsServiceService {
 
   constructor(public http:HttpClient) { };
 
-  public getAllData(): Observable<product>{
-    return this.http.get<product>(`${this.url}`)
+  public getAllData(): Observable<Array<product>>{
+    return this.http.get<Array<product>>(`${this.url}`)
   }
 
   public getIdData(id:string): Observable<product>{

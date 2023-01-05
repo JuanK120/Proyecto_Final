@@ -37,6 +37,7 @@ public class clientContoller{
         return new ResponseEntity<>(clientService.getAllClients(), HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @GetMapping("/{id}")
     public ResponseEntity<client> getClient(@PathVariable("id") int id){
         return clientService.getClientById(id).map(
@@ -84,6 +85,18 @@ public class clientContoller{
         ){
             client client1 = client;
             client1.setModificationDate(new Date(System.currentTimeMillis()));
+            users admin = new users();
+            admin.setUserId(1);
+            admin.setUserName("admin");
+            admin.setEmail("admin@admin.com");
+            admin.setPassword("123456");
+            admin.setActive(true);
+            if (client1.getCreationUser() == null) {
+                client1.setCreationUser(admin);
+            }
+            if (client1.getModificationUser() == null) {
+                client1.setModificationUser(admin);
+            }
             return new ResponseEntity<>(clientService.updateClient(client1),HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

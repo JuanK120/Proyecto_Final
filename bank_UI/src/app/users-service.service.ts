@@ -57,5 +57,9 @@ export class UsersServiceService {
     return this.currentUser;
   }
 
+  public flushCurrentUser():void{
+    this.currentUser=null;
+  }
+
 }
 

@@ -14,6 +14,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { ProductComponent } from './product/product.component';
 import { CommonModule } from '@angular/common';
 import {DatePipe} from '@angular/common';
+import { ClientInfoComponent } from './client-info/client-info.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {DatePipe} from '@angular/common';
     AboutDevComponent,
     UsersComponent,
     TransactionComponent,
-    ProductComponent
+    ProductComponent,
+    ClientInfoComponent
   ],
   imports: [
     BrowserModule,
