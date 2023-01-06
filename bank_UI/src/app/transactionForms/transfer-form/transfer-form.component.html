@@ -1,0 +1,81 @@
+<div class="container">
+    <form [formGroup]="transferForm">
+        <div class="formGroup container row">
+            <div class="formGroup row">
+                <label for="originProduct" class="col-3">Origin Account Number</label>
+                <input type="number" placeholder="Origin Account" class="col-6" id="originProduct" formControlName="originProduct">
+                <button class="btn btn-success float-end col-1" (click)="searchOriginAccount()">search</button>
+            </div>
+            <div class="row align-items-centre">
+                <table class="table">
+                    <thead>
+                        <th>
+                            Product Id
+                        </th>
+                        <th>
+                            Product Number
+                        </th>
+                        <th>
+                            Available Balance
+                        </th>
+                    </thead>
+                    <tbody>
+                        <td>
+                            {{originAccount?.productId}}
+                        </td>
+                        <td>
+                            {{originAccount?.productNumber}}
+                        </td>
+                        <td>
+                            {{originAccount?.availableBalance}}
+                        </td>
+                    </tbody>                    
+                </table>
+            </div>
+
+            <div class="formGroup row">
+                <label for="targetProduct" class="col-3">Target Account Number</label>
+                <input type="number" placeholder="target Account" class="col-6" id="targetProduct" formControlName="targetProduct">
+                <button class="btn btn-success float-end col-1" (click)="searchTargetAccount()">search</button>
+            </div>
+            <div class="row align-items-centre">
+                <table class="table">
+                    <thead>
+                        <th>
+                            Product Id
+                        </th>
+                        <th>
+                            Product Number
+                        </th>
+                        <th>
+                            Available Balance
+                        </th>
+                    </thead>
+                    <tbody>
+                        <td>
+                            {{targetAccount?.productId}}
+                        </td>
+                        <td>
+                            {{targetAccount?.productNumber}}
+                        </td>
+                        <td>
+                            {{targetAccount?.availableBalance}}
+                        </td>
+                    </tbody>                    
+                </table>
+            </div>
+            
+        </div>
+        <div class="formGroup row">
+            <label for="amount" class="col-3">Amount</label>
+            <input type="number" placeholder="Amount" class="col-7" id="amount" formControlName="amount">
+        </div>
+        <div class="formGroup row">
+            <label for="description" class="col-3">description</label>
+            <textarea placeholder="Description" class="col-7" id="description" formControlName="description"></textarea>
+        </div>
+        <div class="formGroup">
+            <button type="submit" class="btn btn-success float-end col-2" (click)="onSubmit()">save</button>
+        </div>
+    </form>
+</div>

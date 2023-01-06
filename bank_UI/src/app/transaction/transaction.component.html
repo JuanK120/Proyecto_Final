@@ -3,14 +3,32 @@
         <a class="navbar-brand" href="#"> <i class="fa-solid fa-piggy-bank"></i> Bank Sophos</a>
         <ul class="navbar-nav float-end">
             <li class="nav-item">
-                <a class="Active">User</a>
+                <a [routerLink]="['/users']" class="">User</a>
             </li>
             <li class="nav-item">
                 <a [routerLink]="['/clients']" class="">Clients</a>
             </li>
             <li class="nav-item">
-                <a [routerLink]="['/login']" class="">Transactions</a>
+                <a [routerLink]="['/transactions']" class="Active">Transactions</a>
             </li>
         </ul>
     </div>
 </nav>
+<div class="container">
+    <form [formGroup]="transactionType">
+        <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="type">
+              <option selected></option>
+              <option value="1">Deposit</option>
+              <option value="2">Withdrawal</option>
+              <option value="3">Transfer</option>
+            </select>
+            <label for="floatingSelect">select Transfer Type</label>
+        </div>
+    </form>
+    <div [ngSwitch]="transactionType.controls['type'].value">
+        <app-deposit-withdrawal-form *ngSwitchCase="1" [transferType]="'1'"></app-deposit-withdrawal-form>
+        <app-deposit-withdrawal-form *ngSwitchCase="2" [transferType]="'2'"></app-deposit-withdrawal-form>
+        <app-transfer-form *ngSwitchCase="3" [transferType]="'3'"></app-transfer-form>
+    </div>
+</div>

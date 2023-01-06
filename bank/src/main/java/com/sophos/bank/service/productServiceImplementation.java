@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ public class productServiceImplementation implements productService{
 
     @Autowired
     productRepository productRepository;
+
+    @Autowired
+    accountStateService accountStateService;
 
     @Override
     public product createProduct(product product) {
@@ -56,7 +60,7 @@ public class productServiceImplementation implements productService{
     }
 
     @Override
-    public List<product> getProductByProductNumber(long productNumber) {
+    public List<product> getProductByProductNumber(BigInteger productNumber) {
         return productRepository.findAllByProductNumber(productNumber);
     }
 

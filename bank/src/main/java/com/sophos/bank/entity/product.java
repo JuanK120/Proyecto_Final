@@ -3,6 +3,7 @@ package com.sophos.bank.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class product {
     @JoinColumn(name = "productType")
     private productType productType;
 
-    private long productNumber;
+    private BigInteger productNumber;
 
     @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "state")
@@ -68,11 +69,11 @@ public class product {
         this.productType = productType;
     }
 
-    public long getProductNumber() {
+    public BigInteger getProductNumber() {
         return productNumber;
     }
 
-    public void setProductNumber(long productNumber) {
+    public void setProductNumber(BigInteger productNumber) {
         this.productNumber = productNumber;
     }
 

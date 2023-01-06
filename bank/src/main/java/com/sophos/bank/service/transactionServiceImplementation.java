@@ -5,6 +5,7 @@ import com.sophos.bank.repository.transactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class transactionServiceImplementation implements transactionService{
     }
 
     @Override
-    public List<transaction> getAllTransactionsByAccount(long targetProduct) {
+    public List<transaction> getAllTransactionsByAccount(BigInteger targetProduct) {
         return transactionRepository.findAllByTargetProduct(targetProduct);
     }
 

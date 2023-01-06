@@ -37,6 +37,10 @@ export class ProductsServiceService {
     return this.http.get<Array<product>>(`${this.url}/owner/${id}`)
   }
 
+  public getDataByProductNumber(id:string): Observable<Array<product>>{
+    return this.http.get<Array<product>>(`${this.url}/number/${id}`)
+  }
+
   public exemptAccount(id:string, body:JSON): Observable<product>{
     return this.http.put<product>(`${this.url}/exempt/${id}`,body)
   }

@@ -1,0 +1,49 @@
+<div class="container">
+    <form [formGroup]="transferForm">
+        <div class="formGroup container row">
+            <div class="row">
+                <label for="targetProduct" class="col-3">Target Account Number</label>
+                <input type="number" placeholder="target Account" class="col-6" id="targetProduct" formControlName="targetProduct">
+                <button class="btn btn-success float-end col-2" (click)="searchAccount()">search</button>
+            </div>
+            <div class="row align-items-centre">
+                <table class="table">
+                    <thead>
+                        <th>
+                            Product Id
+                        </th>
+                        <th>
+                            Product Number
+                        </th>
+                        <th>
+                            Available Balance
+                        </th>
+                    </thead>
+                    <tbody>
+                        <td>
+                            {{newTransfer.targetProduct.productId}}
+                        </td>
+                        <td>
+                            {{newTransfer.targetProduct.productNumber}}
+                        </td>
+                        <td>
+                            {{newTransfer.targetProduct.availableBalance}}
+                        </td>
+                    </tbody>                    
+                </table>
+            </div>
+            
+        </div>
+        <div class="formGroup row">
+            <label for="amount" class="col-3">Amount</label>
+            <input type="number" placeholder="Amount" class="col-7" id="amount" formControlName="amount">
+        </div>
+        <div class="formGroup row">
+            <label for="description" class="col-3">description</label>
+            <textarea placeholder="Description" class="col-7" id="description" formControlName="description"></textarea>
+        </div>
+        <div class="formGroup">
+            <button type="submit" class="btn btn-success float-end col-2" (click)="onSubmit()">save</button>
+        </div>
+    </form>
+</div>

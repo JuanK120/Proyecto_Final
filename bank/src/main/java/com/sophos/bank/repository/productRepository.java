@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +20,9 @@ public interface productRepository extends JpaRepository<product,Integer> {
     List<product> findAllByOwner(Optional<client> client);
     @Modifying
     @Query("UPDATE product  SET owner=?2,productType=?3,productNumber=?4,state=?5,balance=?6,availableBalance=?7, gmfExempt=?8 ,modificationDate=?9,modificationUser=?10 where productId=?1")
-    void setProductInfoById(int productId,client owner, productType productType, long productNumber, accountState state, int balance,
+    void setProductInfoById(int productId, client owner, productType productType, BigInteger productNumber, accountState state, int balance,
                             int availableBalance, boolean exempt, Date modificationDate,
                             users modificationUser);
 
-    List<product> findAllByProductNumber(long productNumber);
+    List<product> findAllByProductNumber(BigInteger productNumber);
 }

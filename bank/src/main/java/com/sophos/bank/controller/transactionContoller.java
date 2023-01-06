@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class transactionContoller {
     }
 
     @GetMapping("/transactions/{accountNumber}")
-    public ResponseEntity<List<transaction>> getTransaction(@PathVariable("accountNumber") long accountNumber){
+    public ResponseEntity<List<transaction>> getTransaction(@PathVariable("accountNumber") BigInteger accountNumber){
         return new ResponseEntity<>(transactionService.getAllTransactionsByAccount(accountNumber), HttpStatus.OK);
     }
 
@@ -59,6 +60,7 @@ public class transactionContoller {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } else {
                 prod.setBalance(newBalance);
+                prod.setAvailableBalance(productValidations.gmfValue(prod.getBalance(), prod.isGmfExempt()));
                 transac.setBalance(prod.getBalance());
                 transac.setAvailableBalance(productValidations.gmfValue(prod.getBalance(), prod.isGmfExempt()));
                 transac.setMovementDate(new Date(System.currentTimeMillis()));
@@ -79,7 +81,7 @@ public class transactionContoller {
             }
         } else if (transac.getTransactionType().getIdType()==3){
             if (transactionValidations.transactionIsViable(prod.getBalance(),transac.getAmount())) {
-                int newBalance = prod.getBalance() - transac.getAmount();
+                int newBalance = prod.getBalance() + transac.getAmount();
                 prod.setBalance(newBalance);
                 transac.setBalance(prod.getBalance());
                 transac.setAvailableBalance(productValidations.gmfValue(prod.getBalance(), prod.isGmfExempt()));

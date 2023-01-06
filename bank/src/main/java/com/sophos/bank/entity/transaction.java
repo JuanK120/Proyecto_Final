@@ -13,11 +13,11 @@ public class transaction {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int transactionId;
 
-    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.MERGE})//(targetEntity = users.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "transactionType")
     private transactionType transactionType;
 
-    @ManyToOne(cascade = CascadeType.MERGE)//(targetEntity = users.class,cascade = CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.MERGE})//(targetEntity = users.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "movementType")
     private movementType movementType;
 

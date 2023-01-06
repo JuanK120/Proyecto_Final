@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,20 +53,24 @@ public class productContoller {
         return new ResponseEntity<>(productService.findAllByOwner(clientService.getClientById(id)), HttpStatus.OK);
     }
 
-    @PostMapping
+    @GetMapping("/number/{number}")
+    public ResponseEntity<List<product>> getProductsByAccountNumber(@PathVariable("number") BigInteger id){
+        return new ResponseEntity<>(productService.getProductByProductNumber(id), HttpStatus.OK);
+    }
+
+    @PostMapping()
     public ResponseEntity<product> createProduct(@RequestBody product product){
         product prod = product;
         if (prod.getProductType().getIdType()==1){
-
             // Balance of savings account can not be less than 0
             if (prod.getBalance() < 0){
                 return new ResponseEntity<>(product,HttpStatus.BAD_REQUEST);
             }
 
             // generation of a new product number
-            long newAccountNumber=Long.parseLong(productValidations.randomString(prod.getProductType().getIdType()));
+            BigInteger newAccountNumber=BigInteger.valueOf(Long.parseLong(productValidations.randomString(prod.getProductType().getIdType())));
             while (!productService.getProductByProductNumber(newAccountNumber).isEmpty()){
-                newAccountNumber=Long.parseLong(productValidations.randomString(prod.getProductType().getIdType()));
+                newAccountNumber=BigInteger.valueOf(Long.parseLong(productValidations.randomString(prod.getProductType().getIdType())));
             }
             prod.setProductNumber(newAccountNumber);
             // calculation of available balance
@@ -80,9 +85,9 @@ public class productContoller {
             }
 
             // generation of a new product number
-            long newAccountNumber=Long.parseLong(productValidations.randomString(prod.getProductType().getIdType()));
+            BigInteger newAccountNumber=BigInteger.valueOf(Long.parseLong(productValidations.randomString(prod.getProductType().getIdType())));
             while (!productService.getProductByProductNumber(newAccountNumber).isEmpty()){
-                newAccountNumber=Long.parseLong(productValidations.randomString(prod.getProductType().getIdType()));
+                newAccountNumber=BigInteger.valueOf(Long.parseLong(productValidations.randomString(prod.getProductType().getIdType())));
             }
             prod.setProductNumber(newAccountNumber);
             // calculation of available balance
