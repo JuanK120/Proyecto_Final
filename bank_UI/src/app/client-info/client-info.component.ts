@@ -74,7 +74,6 @@ export class ClientInfoComponent {
       }
     )
     this.productService.getDataByOwner(`${this.curentClient?.clientId}`).subscribe(res => {
-      console.log(res);      
       this.accounts=res
     });
 
@@ -94,8 +93,7 @@ export class ClientInfoComponent {
   searchAccount():void{
     let search = this.searchAccountForm.controls["IdSearch"].value as string;
     if (search == "" || search == null){
-      this.productService.getDataByOwner(`${this.curentClient?.clientId}`).subscribe(res => {
-        console.log(res);      
+      this.productService.getDataByOwner(`${this.curentClient?.clientId}`).subscribe(res => {      
         this.accounts=res
       });
     } else {
@@ -132,20 +130,23 @@ export class ClientInfoComponent {
     }
     console.log(newAccount);
     this.productService.postData(JSON.parse(JSON.stringify(newAccount))).subscribe(res => {
-      console.log(res);
       this.productService.getDataByOwner(`${this.curentClient?.clientId}`).subscribe(res =>this.accounts=res);
       alert("Account Created");
     },err => alert("invalid Account Information"));
   }
 
   exemptAccount(account:product):void{
-    this.productService.exemptAccount(`${account.productId}`,JSON.parse(JSON.stringify(this.currentUser))).subscribe(res => alert("Gmf Value Updated"), 
-    err=>{
-      console.log('body', JSON.parse(JSON.stringify(this.currentUser)))
-      console.log('error', err);      
-      alert("an error occurred try again later")      
-    });
-    
+    this.productService.exemptAccount(`${account.productId}`,JSON.parse(JSON.stringify(this.currentUser))).subscribe(
+      res => {
+        alert("Gmf Value Updated");
+        this.productService.getDataByOwner(`${this.curentClient?.clientId}`).subscribe(res => {  
+          this.accounts=res
+        });
+      }, 
+      err=>{             
+        alert("an error occurred try again later")      
+      }
+    );   
     
   }
 
