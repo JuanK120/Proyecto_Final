@@ -42,7 +42,7 @@ export class ProductsServiceService {
   }
 
   public exemptAccount(id:string, body:JSON): Observable<product>{
-    return this.http.put<product>(`${this.url}/exempt/${id}`,body)
+    return this.http.put<product>(`${this.url}/exemptAccount/${id}`,body)
   }
 
   public CancelAccount(id:string,body:JSON): Observable<product>{

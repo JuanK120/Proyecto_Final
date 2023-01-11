@@ -67,12 +67,6 @@
                     </select>
                 </div>
                 <div class="form-element">
-                    <label for="state">Account State</label>
-                    <select class="float-end" type="select" id="state" placeholder="Select state" formControlName="state">
-                        <option *ngFor="let state of states" [ngValue]="state">{{ state.stateName }}</option>
-                    </select>
-                </div>
-                <div class="form-element">
                     <label for="name">Balance</label>
                     <input class="float-end" type="number" id="balance" placeholder="Balance" formControlName="balance">                  
                 </div>

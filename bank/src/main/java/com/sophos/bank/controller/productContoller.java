@@ -61,6 +61,16 @@ public class productContoller {
     @PostMapping()
     public ResponseEntity<product> createProduct(@RequestBody product product){
         product prod = product;
+        if (
+                (
+                        prod.isGmfExempt() == true
+                ) && (
+                        !productValidations.noExemptAccounts(
+                                productService.getProductByOwnerAndGmfexempt(prod.getOwner(),true))
+                )
+        ) {
+            prod.setGmfExempt(false);
+        }
         if (prod.getProductType().getIdType()==1){
             // Balance of savings account can not be less than 0
             if (prod.getBalance() < 0){
@@ -125,6 +135,7 @@ public class productContoller {
 
     }
 
+    @CrossOrigin("*")
     @PutMapping("/exemptAccount/{id}")
     public ResponseEntity exemptAccount(@PathVariable("id") int id, @RequestBody users user){
         product prod = productService.getProductById(id).get();
@@ -152,6 +163,7 @@ public class productContoller {
         }
     }
 
+    @CrossOrigin("*")
     @PutMapping("/cancelAccount/{id}")
     public ResponseEntity cancelAccount(@PathVariable("id") int id,@RequestBody users user){
         product prod = productService.getProductById(id).get();

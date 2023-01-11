@@ -55,7 +55,6 @@ export class ClientInfoComponent {
 
   addAccountForm=this.formBuilder.group({
     accountType:{},
-    state:{},
     balance:-10000000,
     gmfExempt:false,
   })
@@ -119,7 +118,10 @@ export class ClientInfoComponent {
       owner:this.curentClient as client,
       productType:this.addAccountForm.controls['accountType'].value as productType,
       productNumber:-1,
-      state:this.addAccountForm.controls["state"].value as accountState,
+      state:{
+          "idState": 1,
+          "stateName": "Active"
+      },
       balance:this.addAccountForm.controls["balance"].value as number,
       availableBalance:-1,
       gmfExempt:this.addAccountForm.controls["gmfExempt"].value as boolean,
@@ -137,12 +139,19 @@ export class ClientInfoComponent {
   }
 
   exemptAccount(account:product):void{
-    this.productService.exemptAccount(`${account.productId}`,JSON.parse(JSON.stringify(this.currentUser)));
-    console.log("here")
+    this.productService.exemptAccount(`${account.productId}`,JSON.parse(JSON.stringify(this.currentUser))).subscribe(res => alert("Gmf Value Updated"), 
+    err=>{
+      console.log('body', JSON.parse(JSON.stringify(this.currentUser)))
+      console.log('error', err);      
+      alert("an error occurred try again later")      
+    });
+    
+    
   }
 
   cancelAccount(account:product):void{
-    this.productService.exemptAccount(`${account.productId}`,JSON.parse(JSON.stringify(this.currentUser)));
+    this.productService.exemptAccount(`${account.productId}`,JSON.parse(JSON.stringify(this.currentUser))).subscribe(res => alert("Account Cancelled"), 
+    err=>alert("an error occurred try again later"));
   }
 
   showAccountInfo(product:product): void{    
